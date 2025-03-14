@@ -30,4 +30,32 @@ FROM empleado
 order by appaterno_emp;
 
 --Caso 4:
-SELECT * FROM 
+
+--Caso 5:
+
+--Caso 6:
+
+--Caso 7:
+SELECT 
+    e.numrun_emp||'-'||e.dvrun_emp "RUN EMPLEADO",
+    pnombre_emp||' '||snombre_emp||' '||appaterno_emp||' '||apmaterno_emp "NOMBRE COMPLETO EMLEADO",
+    round(months_between(sysdate,e.fecha_contrato)/12) "AÑOS CONTRATADO",
+    lpad('$'||sueldo_base,12) "SUELDO BASE",
+    lpad('$'||round(trunc(sueldo_base/100000)/100 * sueldo_base),18) "VALOR MOVILIZACI�N",
+    lpad('$'||
+    case 
+        when e.sueldo_base >=450000 then
+        round(e.sueldo_base*(substr(e.sueldo_base,1,1)/100))
+        else
+        round(e.sueldo_base*(substr(e.sueldo_base,1,2)/100))
+    end,23) "BONIF.EXTRA MOVILIZACION",
+    lpad('$'||(round(trunc(sueldo_base/100000)/100 * sueldo_base) + 
+    case 
+        when e.sueldo_base >=450000 then
+        round(e.sueldo_base*(substr(e.sueldo_base,1,1)/100))
+        else
+        round(e.sueldo_base*(substr(e.sueldo_base,1,2)/100))
+    end),23) "VALOR MOVILIZACION TOTAL"
+FROM empleado e join comuna c on e.id_comuna = c.id_comuna
+where c.nombre_comuna in ('Mar�a Pinto','Curacav�','El Monte','Paine','Pirque')
+order by e.appaterno_emp;
