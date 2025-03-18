@@ -30,12 +30,19 @@ FROM empleado
 order by appaterno_emp;
 
 --Caso 4:
-/*
-delete table HIST_REBAJA_ARRIENDO;
-create table HIST_REBAJA_ARRIENDO(
-    anno_proceso Date not null,
-    nro_patente Varchar2(6) not null
-);*/
+drop table HIST_REBAJA_ARRIENDO;
+create table HIST_REBAJA_ARRIENDO as
+SELECT
+    EXTRACT(year from SYSDATE)"ANNO_PROCESO",
+    nro_patente "NRO_PATENTE",
+    valor_arriendo_dia "VALOR_ARRIENDO_DIA_SR",
+    valor_garantia_dia "VALOR_GARANTIA_DIA_SR",
+    EXTRACT(year from sysdate)-anio "ANNOS_ANTIGUEDAD",
+    valor_arriendo_dia-(valor_arriendo_dia * (EXTRACT(year from sysdate)-anio)/100) "VALOR_ARRIENDO_DIA_CR",
+    valor_garantia_dia-(valor_garantia_dia * (EXTRACT(year from sysdate)-anio)/100) "VALOR_GARANTIA_DIA_CR"
+FROM camion
+where EXTRACT(year from sysdate)-anio > 5
+order by 5 desc,nro_patente;
 --Caso 5:
 SELECT 
     to_char(sysdate,'MM/YYYY') "MES_ANNO_PROCESO",
