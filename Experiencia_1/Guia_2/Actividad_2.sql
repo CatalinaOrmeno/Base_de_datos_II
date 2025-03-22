@@ -1,6 +1,6 @@
 --Caso 1:
 SELECT
-    carreraid "IDENTIFICACIÓN DE LA CARRERA",
+    carreraid "IDENTIFICACIï¿½N DE LA CARRERA",
     COUNT(*) "TOTAL ALUMNOS MATRICULADOS",
     'Le corresponden '||
     to_char(COUNT(*)*&Ingrese_valor,'$999g999g999')||
@@ -23,7 +23,7 @@ SELECT
     to_char(run_jefe,'00g000g000') "RUN JEFE SIN DV",
     COUNT(*) "TOTAL DE EMPLEDOS A SU CARGO",
     to_char(max(salario),'999g999g999') "SALARIO MAXIMO",
-    lpad(COUNT(*)*10||'% del Salario Máximo',25) "PORCENTAJE DE BONIFICACION",
+    lpad(COUNT(*)*10||'% del Salario Mï¿½ximo',25) "PORCENTAJE DE BONIFICACION",
     to_char((COUNT(*)/10)*max(salario),'$999g999g999') "BONIFICACION"
 FROM empleado
 where run_jefe is not null
@@ -33,7 +33,7 @@ order by 2;
 --Caso 4:
 SELECT
     es.id_escolaridad "ESCOLARIDAD",
-    es.desc_escolaridad "DESCRIPCIÓN ESCOLARIDAD",
+    es.desc_escolaridad "DESCRIPCIï¿½N ESCOLARIDAD",
     COUNT(*)"TOTAL DE EMPLEADOS",
     rpad(to_char(max(emp.salario),'$999g999g999'),16) "SALARIO MAXIMO",
     rpad(to_char(min(emp.salario),'$999g999g999'),16) "SALARIO MINIMO",
@@ -63,3 +63,13 @@ group by tituloid
 order by 2 desc;
 
 --Caso 6:
+SELECT 
+   to_char(run_emp,'00g000g000') "RUN EMPLEADO",
+   lpad(to_char(fecha_ini_prestamo,'MM/YYYY'),20) "MES PRESTAMOS LIBROS",
+   count(*)"TOTAL PRESTAMOS ATENDIDOS",
+   lpad(to_char(count(*)*10000,'$999,999,999'),24) "ASIGNACION POR PRESTAMOS"
+FROM prestamo
+where extract(year from fecha_ini_prestamo)=extract(year from sysdate)-1
+group by run_emp,to_char(fecha_ini_prestamo,'MM/YYYY')
+having count(*)>2
+ORDER by 2,4 desc,run_emp desc;
