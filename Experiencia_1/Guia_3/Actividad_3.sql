@@ -47,23 +47,25 @@ order by 1,2;
 
 -- Caso 4:
 SELECT
-    to_char(c.numrun,'00g000g000')||'-'||c.dvrun "RUN CLIENTE",
+    to_char(c.numrun,'00g000g000')||'-'||upper(c.dvrun) "RUN CLIENTE",
     c.pnombre||' '||c.snombre||' '||c.appaterno||' '||c.apmaterno"NOMBRE CLIENTE",
-    to_char(pic.monto_total_ahorrado /*+ pic.ahorro_minimo_mensual*/,'$999g999g999') "MONTO TOTAL AHORRADO",
+    lpad(to_char(sum(pic.monto_total_ahorrado) + sum(pic.ahorro_minimo_mensual),'$999g999g999'),25) "MONTO TOTAL AHORRADO",
     case
-        when pic.monto_total_ahorrado /*+ pic.ahorro_minimo_mensual*/ between 100000 and 1000000 then
+        when sum(pic.monto_total_ahorrado) + sum(pic.ahorro_minimo_mensual) between 100000 and 1000000 then
             'BRONZE'
-        when pic.monto_total_ahorrado /*+ pic.ahorro_minimo_mensual*/ between 1000001 and 4000000 then
+        when sum(pic.monto_total_ahorrado) + sum(pic.ahorro_minimo_mensual) between 1000001 and 4000000 then
             'PLATA'
-        when pic.monto_total_ahorrado /*+ pic.ahorro_minimo_mensual*/ between 4000001 and 8000000 then
+        when sum(pic.monto_total_ahorrado) + sum(pic.ahorro_minimo_mensual) between 4000001 and 8000000 then
             'SILVER'
-        when pic.monto_total_ahorrado /*+ pic.ahorro_minimo_mensual*/ between 8000001 and 15000000 then
+        when sum(pic.monto_total_ahorrado) + sum(pic.ahorro_minimo_mensual) between 8000001 and 15000000 then
             'GOLD'
-        when pic.monto_total_ahorrado /*+ pic.ahorro_minimo_mensual*/ > 15000000 then
+        when sum(pic.monto_total_ahorrado) + sum(pic.ahorro_minimo_mensual) > 15000000 then
             'PLATINUM'
+        else 'SIN CATEGORIA'
     end "CATEGORIA CLIENTE"
 FROM producto_inversion_cliente pic
 join cliente c on pic.nro_cliente = c.nro_cliente
+group by c.numrun,c.dvrun,c.pnombre,c.snombre,c.appaterno,c.apmaterno
 --where pic.monto_total_ahorrado >99999
 order by c.appaterno,3 desc;
 
