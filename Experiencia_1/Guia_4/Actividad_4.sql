@@ -58,4 +58,35 @@ group by c.numrun,c.dvrun,c.pnombre,c.snombre,c.appaterno,c.apmaterno
 order by c.appaterno,3 desc;
 
 -- Caso 5:
+SELECT 
+    to_char(c.numrun,'00g000g000')||'-'||upper(c.dvrun) "RUN CLIENTE",
+    initcap(c.pnombre||' '||substr(c.snombre,1,1)||'. '||c.appaterno||' '||c.apmaterno)"NOMBRE CLIENTE",
+    count(*) "TOTAL SUPER AVANCES VIGENTES",
+    lpad(to_char(sum(ttc.monto_total_transaccion),'$999g999g999'),24)"MONTO TOTAL SUPER AVANCES"
+FROM cliente c
+join tarjeta_cliente tc on tc.numrun = c.numrun
+join transaccion_tarjeta_cliente ttc on ttc.nro_tarjeta = tc.nro_tarjeta
+where extract(year from ttc.fecha_transaccion) = extract(year from sysdate) and ttc.cod_tptran_tarjeta = 103
+group by c.numrun,c.dvrun,c.pnombre,c.snombre,c.appaterno,c.apmaterno
+order by c.appaterno;
+
 -- Caso 6:
+-- Informe 1:
+SELECT 
+    to_char(c.numrun,'00g000g000')||'-'||upper(c.dvrun) "RUN CLIENTE",
+    initcap(c.pnombre||' '||substr(c.snombre,1,1)||'. '||c.appaterno||' '||c.apmaterno)"NOMBRE CLIENTE",
+    sr.direccion "DIRECCION",
+    pr.nombre_provincia"PROVINCIA",
+    r.nombre_region"REGION"
+FROM cliente c
+left join tarjeta_cliente tc on tc.numrun = c.numrun 
+left join transaccion_tarjeta_cliente ttc on ttc.nro_tarjeta = tc.nro_tarjeta
+left join cuota_transac_tarjeta_cliente cttc ON ttc.nro_tarjeta = cttc.nro_tarjeta and cttc.fecha_venc_cuota > sysdate
+join comuna com on com.cod_region = c.cod_region and com.cod_provincia = c.cod_provincia and com.cod_comuna = c.cod_comuna
+join sucursal_retail sr on sr.cod_region = com.cod_region and sr.cod_provincia = com.cod_provincia and sr.cod_comuna = com.cod_comuna
+join region r on com.cod_region = r.cod_region
+join provincia pr on com.cod_provincia = pr.cod_provincia and com.cod_region = pr.cod_region
+
+
+group by c.numrun,c.dvrun,c.pnombre,c.snombre,c.appaterno,c.apmaterno,r.nombre_region,pr.nombre_provincia,sr.direccion
+order by 5,sr.direccion,c.appaterno;
