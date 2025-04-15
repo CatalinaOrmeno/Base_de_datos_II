@@ -157,7 +157,51 @@ order by pag.fecha_venc_pago,6 desc;
 
 -- Caso 5:
 -- Sub consulta:
-
+SELECT 
+    m.med_run
+FROM atencion a
+join medico m on m.med_run = a.med_run
+where extract(year from a.fecha_atencion) = extract(year from sysdate)
+group by m.med_run
+having count(*) > 7;
 
 -- Consulta principal:
-
+Variable Ganancias int;
+exec :Ganancias := :&Ingrese_ganancias;
+SELECT 
+    to_char(me.med_run,'00g000g000')||'-'||me.dv_run "RUT MEDICO",
+    me.pnombre||' '||me.snombre||' '||me.apaterno||' '||me.amaterno"NOMBRE MEDICO",
+    count(*)"TOTAL ATENCIONES MEDICAS",
+    to_char(me.sueldo_base,'$999g999g999')"SUELDO BASE",
+    lpad(to_char(
+        (:Ganancias * 0.05)/
+        (
+            Select count(*) 
+            from (
+                SELECT m.med_run FROM atencion a 
+                        join medico m on m.med_run = a.med_run
+                        where extract(year from a.fecha_atencion) = extract(year from sysdate)
+                        group by m.med_run having count(*) > 7)
+        )
+    ,'$999g999g999'),25)"BONIFICACION POR GANANCIAS",
+    to_char(
+        me.sueldo_base +
+        ((:Ganancias * 0.05)/
+        (
+            Select count(*) 
+            from (
+                SELECT m.med_run FROM atencion a 
+                        join medico m on m.med_run = a.med_run
+                        where extract(year from a.fecha_atencion) = extract(year from sysdate)
+                        group by m.med_run having count(*) > 7)
+        ))
+    ,'$999g999g999')"SUELDO TOTAL"
+FROM medico me
+join atencion ate on me.med_run = ate.med_run
+where extract(year from ate.fecha_atencion) = extract(year from sysdate) and
+    me.med_run =any (SELECT m.med_run FROM atencion a 
+                        join medico m on m.med_run = a.med_run
+                        where extract(year from a.fecha_atencion) = extract(year from sysdate)
+                        group by m.med_run having count(*) > 7)
+group by me.med_run,me.dv_run,me.pnombre,me.snombre,me.apaterno,me.amaterno,me.sueldo_base
+order by me.med_run,me.apaterno;
