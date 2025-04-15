@@ -1,4 +1,5 @@
 -- Caso 1:
+-- Beneficio a pacientes de Fonasa e Isapres:
 -- Sub consulta:
 SELECT round(avg(count(*))) FROM atencion a 
 where extract(month from a.fecha_atencion) = extract(month from sysdate)-1 and
@@ -22,6 +23,7 @@ having count(*) > (SELECT round(avg(count(*))) FROM atencion a
                             group by a.fecha_atencion)
 group by ts.descripcion,s.descripcion;
 
+-- Beneficio a pacientes de la tercera edad:
 -- Sub consulta:
 SELECT 
     p.pac_run
@@ -53,28 +55,29 @@ order by pa.apaterno;
 -- Caso 2:
 -- Sub consulta:
 SELECT 
-    a.esp_id"ID",
+    es.esp_id"ID",
     es.nombre "ESPECIALIDAD",
-    count(*) "CONSULTAS DURANTE EL AÑO"
+    count(a.ate_id) "CONSULTAS DURANTE EL AÑO"
 FROM atencion a
-join especialidad es on es.esp_id = a.esp_id
-where extract(year from a.fecha_atencion) = extract(year from sysdate)-1
-group by a.esp_id,es.nombre
-having count(*) < 10;
+right join especialidad es on es.esp_id = a.esp_id
+    and extract(year from a.fecha_atencion) = extract(year from sysdate)-1
+group by es.esp_id,es.nombre
+having count(a.ate_id) < 10
+order by 3 desc;
 
 -- Consulta principal:
 SELECT 
-    espe.nombre "ESPECIALIDAD",
+    lower(espe.nombre) "ESPECIALIDAD",
     to_char(m.med_run,'00g000g000')||'-'||m.dv_run"RUT",
     upper(m.pnombre||' '||m.snombre||' '||m.apaterno||' '||m.amaterno)"MEDICO"
 FROM especialidad_medico esm
 join medico m on m.med_run = esm.med_run
 join especialidad espe on espe.esp_id = esm.esp_id
-where esm.esp_id =any (SELECT a.esp_id FROM atencion a 
-                            join especialidad es on es.esp_id = a.esp_id
-                            where extract(year from a.fecha_atencion) = 
+where esm.esp_id =any (SELECT es.esp_id FROM atencion a 
+                            right join especialidad es on es.esp_id = a.esp_id
+                                and extract(year from a.fecha_atencion) = 
                             extract(year from sysdate)-1
-                            group by a.esp_id,es.nombre having count(*) < 10)
+                            group by es.esp_id,es.nombre having count(a.ate_id) < 10)
 order by 1,m.apaterno;
 
 -- Caso 3:!!!
