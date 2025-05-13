@@ -72,4 +72,14 @@ where initcap(c.pnombre_cli||' '||c.snombre_cli||' '||c.appaterno_cli||' '||c.ap
     (select nombre_cliente FROM clientes_arriendos_menos_prom)
 order by c.appaterno_cli;
 
+-- Caso 3:
+SELECT 
+    cl.numrun_cli||'-'||cl.dvrun_cli "RUT",
+    count(arr.numrun_cli)
+FROM cliente cl
+left join arriendo_camion arr on cl.numrun_cli = arr.numrun_cli
+    and extract(year from arr.fecha_ini_arriendo) = extract(year from sysdate)-2
+group by cl.numrun_cli,cl.dvrun_cli
+having count(arr.numrun_cli) = 0;
+
 --ROLLBACK original;
