@@ -1,4 +1,4 @@
--- Vistas y sequencias:
+-- Vistas, sequencias y sinónimos:
 -- Vistas:
 -- Original:
 create view V_DIRE_CLIENTE as
@@ -74,3 +74,13 @@ insert into marca(nombre) values('Adidas');
 insert into marca(nombre) values('Sony');
 insert into marca(nombre) values('Acuenta');
 insert into marca(nombre) values('Samsung');
+
+-- Sinónimos: Cambiar nombre de acceso a las tablas.
+create synonym zona for KOPERA.region; -- Crea el sinónimo.
+SELECT * FROM zona; -- Consulta con el sinónimo.
+
+-- Públicos: Lo puede ver cualquier usuario dentro del entorno.
+create public SYNONYM establecimiento for KOPERA.sucursal;
+SELECT * FROM establecimiento;
+
+-- Privados: Solo los que tienen los permisos necesarios.
