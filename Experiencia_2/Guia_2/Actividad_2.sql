@@ -44,26 +44,7 @@ create SYNONYM Caso2 for KOPERA.BDY1102_P7_2;
 SELECT * FROM caso2;
 
 -- Caso 3:
-create SEQUENCE seq_caso3_numrut
-    start with 10
-    increment by 2
-    NOCACHE;
-create SEQUENCE seq_caso3_dvrut
-    start with 1
-    increment by 3
-    NOCACHE;
-
-update 
-SELECT 
-    to_char(seq_caso3_numrut.nextval)||' '||to_char(c.numrun,'00g000g000')||'-'||to_char(seq_caso3_dvrut.nextval)||c.dvrun RUN_CLIENTE,
-    count(*) TOTAL_PROD_INV_AFECTOS_OMPTO,
-    sum(pic.monto_total_ahorrado+pic.ahorro_minimo_mensual) MONTO_TOTAL_AHORRADO
-FROM cliente c
-join producto_inversion_cliente pic on pic.nro_cliente = c.nro_cliente
-    and pic.cod_prod_inv in (30,35,40,45,50,55)
-group by extract(year from sysdate),c.numrun,c.dvrun,c.pnombre,c.snombre,c.appaterno,c.apmaterno;
---order by c.appaterno;
-
+-- Ejemplo 1:
 create table caso_3 as
 SELECT 
    extract(year from sysdate) ANNO_TRIBUTARIO,
@@ -76,3 +57,36 @@ join producto_inversion_cliente pic on pic.nro_cliente = c.nro_cliente
     and pic.cod_prod_inv in (30,35,40,45,50,55)
 group by extract(year from sysdate),c.numrun,c.dvrun,c.pnombre,c.snombre,c.appaterno,c.apmaterno
 order by c.appaterno;
+
+-- Ejemplo 2:
+create SEQUENCE seq_caso3_numrut
+    start with 10
+    increment by 2
+    NOCACHE;
+create SEQUENCE seq_caso3_dvrut
+    start with 1
+    increment by 3
+    NOCACHE;
+
+/*SELECT 
+   seq_caso3_numrut.nextval||' '||to_char(c.numrun,'00g000g000')||'-'||seq_caso3_dvrut.nextval||c.dvrun RUN_CLIENTE,
+   count(*) TOTAL_PROD_INV_AFECTOS_OMPTO,
+   sum(pic.monto_total_ahorrado+pic.ahorro_minimo_mensual) MONTO_TOTAL_AHORRADO
+FROM cliente c
+join producto_inversion_cliente pic on pic.nro_cliente = c.nro_cliente
+    and pic.cod_prod_inv in (30,35,40,45,50,55)
+group by extract(year from sysdate),c.numrun,c.dvrun,c.pnombre,c.snombre,c.appaterno,c.apmaterno
+order by c.appaterno;*/
+
+-- Caso 4:
+-- Informe 1:
+SELECT 
+    to_char(c.numrun,'00g000g000')||'-'||upper(to_char(c.dvrun)) RUN_CLIENTE,
+    initcap(c.pnombre||' '||c.snombre||'. '||c.appaterno||' '||c.apmaterno) NOMBRE_CLIENTE,
+    count(crc.nro_cliente) "TOTAL_CREDITOS_SOLICITADOS"
+FROM cliente c
+join credito_cliente crc on crc.nro_cliente = c.nro_cliente
+    and extract(year from crc.fecha_solic_cred) = extract(year from sysdate)-1
+group by c.numrun,c.dvrun,c.pnombre,c.snombre,c.appaterno,c.apmaterno;
+
+-- Informe 2:
