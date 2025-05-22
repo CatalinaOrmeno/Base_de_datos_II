@@ -1,0 +1,1 @@
+grant SELECT on tec23_1.v_sujeto_inversion to con23_3;

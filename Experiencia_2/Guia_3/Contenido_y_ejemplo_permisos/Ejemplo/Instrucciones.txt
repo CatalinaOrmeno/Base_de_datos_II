@@ -1,0 +1,4 @@
+Vista que permita mostrar el rut del cliente, el nombre completo, la cantidad de productos de inversión y la suma total del monto total ahorrado.
+
+- No puedes utilizar los nombres reales de las tablas.
+- Debe quedar almacenado en una vista que pueda utilizar el consultor 3.

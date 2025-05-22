@@ -1,0 +1,1 @@
+SELECT * FROM tec23_1.v_pega_persona;
