@@ -53,6 +53,14 @@ begin
     else
         dbms_output.put_line('Estado   :Inactivo');
     end if;
+    
+    /*if v_salario<600000 then
+        v_impuesto := 0.05;
+    ELSIF v_salario between 600000 and 1000000 then
+        v_impuesto := 0.10;
+    else 
+        v_impuesto := 0.15;
+    end if;*/
 end;
 /
 
