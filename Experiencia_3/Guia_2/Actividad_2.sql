@@ -140,7 +140,10 @@ begin
     v_clave :=
         substr(to_char(v_numrun), 3, 1) ||
         to_char(extract(year from v_anno_nac) + 2) ||
-        to_char(to_number(substr(to_char(v_sueldo), -3, 3)- 1)) ||
+        case substr(to_char(v_sueldo), -3, 3)
+            when 0 then '999'
+            else to_char(to_number(substr(to_char(v_sueldo), -3, 3))- 1)
+        end ||
         case 
             when v_est_civil in ('CASADO', 'ACUERDO DE UNION CIVIL') then
                 lower(substr(v_appaterno,1,2))
