@@ -120,6 +120,8 @@ SELECT
     m.pnombre||' '||m.snombre||' '||m.apaterno||' '||m.amaterno NOMBRE_MEDICO,
     substr(u.nombre,1,2)||
     substr(m.apaterno,-3,2)||
+    substr(m.telefono,-3,3)||
+    to_char(m.fecha_contrato,'DDMM')||
     '@medicocktk.cl' 
     CORREO_INSTITUCIONAL,
     count(a.med_run) TOTAL_ATEN_MEDICAS,
@@ -143,7 +145,7 @@ FROM medico m
     join unidad u on u.uni_id = m.uni_id
     left join atencion a on a.med_run = m.med_run
         and extract(year from a.fecha_atencion) = extract(year from sysdate)-1
-group by u.nombre,m.med_run,m.dv_run,m.pnombre,m.snombre,m.apaterno,m.amaterno,u.uni_id
+group by u.nombre,m.med_run,m.dv_run,m.pnombre,m.snombre,m.apaterno,m.amaterno,u.uni_id,m.telefono,m.fecha_contrato
 having count(a.med_run) < (
     SELECT 
         max(count(at.med_run)) MAX_ATEN_MEDICAS
@@ -164,6 +166,8 @@ declare
             m.pnombre||' '||m.snombre||' '||m.apaterno||' '||m.amaterno NOMBRE_MEDICO,
             substr(u.nombre,1,2)||
             substr(m.apaterno,-3,2)||
+            substr(m.telefono,-3,3)||
+            to_char(m.fecha_contrato,'DDMM')||
             '@medicocktk.cl' 
             CORREO_INSTITUCIONAL,
             count(a.med_run) TOTAL_ATEN_MEDICAS
@@ -171,7 +175,7 @@ declare
             join unidad u on u.uni_id = m.uni_id
             left join atencion a on a.med_run = m.med_run
                 and extract(year from a.fecha_atencion) = extract(year from sysdate)-1
-        group by u.nombre,m.med_run,m.dv_run,m.pnombre,m.snombre,m.apaterno,m.amaterno,u.uni_id
+        group by u.nombre,m.med_run,m.dv_run,m.pnombre,m.snombre,m.apaterno,m.amaterno,u.uni_id,m.telefono,m.fecha_contrato
         having count(a.med_run) < (
             SELECT 
                 max(count(at.med_run)) MAX_ATEN_MEDICAS
