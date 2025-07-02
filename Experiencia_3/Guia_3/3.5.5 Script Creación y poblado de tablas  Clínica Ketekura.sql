@@ -1,4 +1,4 @@
--- ****************** ELIMINACIÓN DE TABLAS *****************
+-- ****************** ELIMINACIï¿½N DE TABLAS *****************
 DROP TABLE PAGO_ATENCION CASCADE CONSTRAINTS;
 DROP TABLE ATENCION CASCADE CONSTRAINTS;
 DROP TABLE PACIENTE CASCADE CONSTRAINTS;
@@ -15,7 +15,7 @@ DROP TABLE PAGO_MOROSO CASCADE CONSTRAINTS;
 DROP TABLE TRAMO_ASIG_ATMED CASCADE CONSTRAINTS;
 DROP TABLE INFO_MEDICO_SII CASCADE CONSTRAINTS;
 
--- ****************** CREACIÓN DE TABLAS *****************
+-- ****************** CREACIï¿½N DE TABLAS *****************
 CREATE TABLE UNIDAD(
 uni_id NUMBER (4) NOT NULL,
 nombre VARCHAR2 (40) NOT NULL,
@@ -24,7 +24,7 @@ ALTER TABLE UNIDAD ADD CONSTRAINT PK_UNIDAD PRIMARY KEY (uni_id);
 
 CREATE TABLE CARGO(
 car_id NUMBER (3) NOT NULL,
-nombre VARCHAR2 (30) NOT NULL);
+nombre VARCHAR2 (35) NOT NULL);
 ALTER TABLE CARGO ADD CONSTRAINT PK_CARGO PRIMARY KEY (car_id);
 
 CREATE TABLE ESPECIALIDAD(
@@ -134,7 +134,7 @@ CONSTRAINT PK_MED_SERV_COMUNIDAD PRIMARY KEY,
  numrun NUMBER(12) NOT NULL,
  dv_run VARCHAR(5) NOT NULL,
  nombre_completo VARCHAR2(60) NOT NULL,
- cargo VARCHAR2(30) NOT NULL,
+ cargo VARCHAR2(35) NOT NULL,
  meses_trabajados NUMBER(2) NOT NULL,
  sueldo_base_mensual NUMBER(15) NOT NULL,
  sueldo_base_anual NUMBER(15) NOT NULL,
@@ -162,15 +162,15 @@ INSERT INTO  PORC_DESCTO_3RA_EDAD VALUES(76,80,8);
 INSERT INTO  PORC_DESCTO_3RA_EDAD VALUES(81,85,10);
 INSERT INTO  PORC_DESCTO_3RA_EDAD VALUES(86,120,20);
 
-INSERT INTO  cargo VALUES('100','Presidente junta médica');
-INSERT INTO  cargo VALUES('200','Médico auditor');
-INSERT INTO  cargo VALUES('300','Médico atención adulto');
-INSERT INTO  cargo VALUES('400','Médico atención ambulatoria');
+INSERT INTO  cargo VALUES('100','Presidente junta mï¿½dica');
+INSERT INTO  cargo VALUES('200','Mï¿½dico auditor');
+INSERT INTO  cargo VALUES('300','Mï¿½dico atenciï¿½n adulto');
+INSERT INTO  cargo VALUES('400','Mï¿½dico atenciï¿½n ambulatoria');
 INSERT INTO  cargo VALUES('500','Psiquiatra');
-INSERT INTO  cargo VALUES('600','Director médico');
-INSERT INTO  cargo VALUES('700','Médico paciente crítico');
-INSERT INTO  cargo VALUES('800','Médico atencón urgencia');
-INSERT INTO  cargo VALUES('900','Médico Cirujano');
+INSERT INTO  cargo VALUES('600','Director mï¿½dico');
+INSERT INTO  cargo VALUES('700','Mï¿½dico paciente crï¿½tico');
+INSERT INTO  cargo VALUES('800','Mï¿½dico atencï¿½n urgencia');
+INSERT INTO  cargo VALUES('900','Mï¿½dico Cirujano');
 
 INSERT INTO  tipo_salud VALUES('F','Fonasa');
 INSERT INTO  tipo_salud VALUES('I','Isapre');
@@ -197,25 +197,25 @@ INSERT INTO  salud VALUES(160,'Personal Retirado Carabineros y PDI',60,'C');
 INSERT INTO  salud VALUES(170,'Personal no afiliado a un sistema de salud',100,'P');
 
 
-INSERT INTO  especialidad VALUES('100','Cirugía General');
-INSERT INTO  especialidad VALUES('200','Ortopedia y Traumatología');
-INSERT INTO  especialidad VALUES('300','Dermatología');
-INSERT INTO  especialidad VALUES('400','Inmunología');
-INSERT INTO  especialidad VALUES('500','Fisiatría');
+INSERT INTO  especialidad VALUES('100','Cirugï¿½a General');
+INSERT INTO  especialidad VALUES('200','Ortopedia y Traumatologï¿½a');
+INSERT INTO  especialidad VALUES('300','Dermatologï¿½a');
+INSERT INTO  especialidad VALUES('400','Inmunologï¿½a');
+INSERT INTO  especialidad VALUES('500','Fisiatrï¿½a');
 INSERT INTO  especialidad VALUES('600','Medicina Interna');
 INSERT INTO  especialidad VALUES('700','Medicina General');
-INSERT INTO  especialidad VALUES('800','Neurología');
-INSERT INTO  especialidad VALUES('900','Otorrinolaringología');
-INSERT INTO  especialidad VALUES('1000','Oftalmología');
-INSERT INTO  especialidad VALUES('1100','Psiquiatría Adultos');
-INSERT INTO  especialidad VALUES('1200','Urología');
-INSERT INTO  especialidad VALUES('1300','Cirugía Cardiovascular');
-INSERT INTO  especialidad VALUES('1400','Cirugía Digestiva');
-INSERT INTO  especialidad VALUES('1500','Cardiología');
-INSERT INTO  especialidad VALUES('1600','Gastroenterología');
-INSERT INTO  especialidad VALUES('1700','Oncología Médica');
-INSERT INTO  especialidad VALUES('1800','Reumatología');
-INSERT INTO  especialidad VALUES('1900','Cirugía Plástica');
+INSERT INTO  especialidad VALUES('800','Neurologï¿½a');
+INSERT INTO  especialidad VALUES('900','Otorrinolaringologï¿½a');
+INSERT INTO  especialidad VALUES('1000','Oftalmologï¿½a');
+INSERT INTO  especialidad VALUES('1100','Psiquiatrï¿½a Adultos');
+INSERT INTO  especialidad VALUES('1200','Urologï¿½a');
+INSERT INTO  especialidad VALUES('1300','Cirugï¿½a Cardiovascular');
+INSERT INTO  especialidad VALUES('1400','Cirugï¿½a Digestiva');
+INSERT INTO  especialidad VALUES('1500','Cardiologï¿½a');
+INSERT INTO  especialidad VALUES('1600','Gastroenterologï¿½a');
+INSERT INTO  especialidad VALUES('1700','Oncologï¿½a Mï¿½dica');
+INSERT INTO  especialidad VALUES('1800','Reumatologï¿½a');
+INSERT INTO  especialidad VALUES('1900','Cirugï¿½a Plï¿½stica');
 
 INSERT INTO  medico VALUES(3126425,'1','Gregoria','Regina','Gonzalez','Castillo',56943757343,808089,'21-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-6),200,100);
 INSERT INTO  medico VALUES(5588583,'4','Maria','Margarita','Fernandez','Fernandez',56986067331,475943,'23-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-1),700,200);
@@ -228,12 +228,12 @@ INSERT INTO  medico VALUES(7327526,'1','Santos','Abelardo','Reyes','Chavez',5695
 INSERT INTO  medico VALUES(6783834,'3','Ana','Rosario','Betanzo','Gacitua',56954216826,1601029,'20-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-5),400,300);
 INSERT INTO  medico VALUES(9169312,'7','Francisco','Cristian','Fuentes','Monsalve',56937342030,1130427,'11-12-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-5),400,300);
 INSERT INTO  medico VALUES(14284031,'6','Luis','Guillermo','Jara','Urbina',56991869103,1719285,'25-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-5),400,300);
-INSERT INTO  medico VALUES(6751207,'3','Delmira','Carmen','Sepulveda','Peña',56935221206,1062325,'05-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),900,600);
+INSERT INTO  medico VALUES(6751207,'3','Delmira','Carmen','Sepulveda','Peï¿½a',56935221206,1062325,'05-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),900,600);
 INSERT INTO  medico VALUES(10834039,'8','Jose','Alberto','Badilla','Leal',56939539356,1518019,'11-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-5),400,300);
 INSERT INTO  medico VALUES(11959315,'8','Ana','Maria','Escobar','Montero',56970510282,1016910,'17-11-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-5),200,800);
 INSERT INTO  medico VALUES(13604392,'7','Blanca','Regina','Mendoza','Rojas',56972531275,1390157,'19-02-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-9),600,500);
 INSERT INTO  medico VALUES(14490825,'2','Gloria','Isabel','Hernandez','Zapata',56948576648,1386484,'07-12-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),500,700);
-INSERT INTO  medico VALUES(4808258,'0','Policarpo','Hipolito','Urrutia','Muñoz',56995507317,959733,'14-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-7),100,400);
+INSERT INTO  medico VALUES(4808258,'0','Policarpo','Hipolito','Urrutia','Muï¿½oz',56995507317,959733,'14-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-7),100,400);
 INSERT INTO  medico VALUES(6543007,'K','Maureen','Susan','Clemo','Turner',56954073007,1502219,'16-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-10),100,400);
 INSERT INTO  medico VALUES(3943337,'0','Isidoro','Eduardo','Ordenes','Hormazabal',56976838623,1520643,'23-06-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),400,300);
 INSERT INTO  medico VALUES(5644453,'K','Manuel','Carlos','Aravena','Fuentealba',56921581272,1958094,'28-07-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-10),400,300);
@@ -242,7 +242,7 @@ INSERT INTO  medico VALUES(3027750,'3','Fidel','Meri','Chavarria','Pacheco',5698
 INSERT INTO  medico VALUES(9827836,'2','Jose','Gaston','Rocha','Lara',56952406038,521659,'27-01-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),200,800);
 INSERT INTO  medico VALUES(11448750,'3','Maria','Nelly','Martinez','Hernandez',56929544102,1972989,'12-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),100,400);
 INSERT INTO  medico VALUES(3758049,'K','Hector','Rene','Andrade','Faundez',56930378649,1604395,'03-05-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),800,900);
-INSERT INTO  medico VALUES(5412514,'3','Maria','Magdalena','Beltran','Jaña',56971076051,966917,'15-10-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-9),400,300);
+INSERT INTO  medico VALUES(5412514,'3','Maria','Magdalena','Beltran','Jaï¿½a',56971076051,966917,'15-10-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-9),400,300);
 INSERT INTO  medico VALUES(5825975,'6','Gladys','Yolanda','Echeverria','Cifuentes',56974126261,2014845,'20-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),100,400);
 INSERT INTO  medico VALUES(11293307,'7','Eduardo','Thomas','Castillo','Castillo',56974063821,2352622,'29-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),700,900);
 INSERT INTO  medico VALUES(4582433,'0','Bartolome','Ignacio','Parra','Parra',56973814523,559093,'22-05-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),700,900);
@@ -251,7 +251,7 @@ INSERT INTO  medico VALUES(6135687,'8','Enrique','Carmen','Morales','Silva',5697
 INSERT INTO  medico VALUES(11292307,'9','Carlos','Alfonso','Mejias','Morales',56987653212,880396,'10-05-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-5),900,300);
 INSERT INTO  medico VALUES(10282370,'K','Tania','Alejandra','Bahamondez','Perez',56978562321,930870,'02-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-4),500,300);
 INSERT INTO  medico VALUES(10573148,'5','Francisco','Fuentes','Gonzalez','Zapata',56948576648,1386484,'07-12-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),400,300);
-INSERT INTO  medico VALUES(13765749,'K','Jose','Badilla','Leal','Muñoz',56995507317,959733,'14-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-7),300,700);
+INSERT INTO  medico VALUES(13765749,'K','Jose','Badilla','Leal','Muï¿½oz',56995507317,959733,'14-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-7),300,700);
 INSERT INTO  medico VALUES(13996528,'0','Ana','Rosario','Betanzo','Turner',56954073007,1502219,'16-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-10),400,300);
 INSERT INTO  medico VALUES(14030150,'7','Blanca','Mendoza','Rojas','Hormazabal',56976838623,1520643,'23-06-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-11),600,500);
 INSERT INTO  medico VALUES(10863274,'7','Isidoro','Ordenes','Hormazabal','Fuentealba',56921581272,1958094,'28-07-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-1),100,400);
@@ -333,44 +333,44 @@ INSERT INTO  especialidad_medico VALUES('13996528','500','16/08/'||TO_CHAR(EXTRA
 INSERT INTO  especialidad_medico VALUES('14030150','1100','23/06/'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-19));
 INSERT INTO  especialidad_medico VALUES('14353190','1100','16/04/'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-13));
 
-INSERT INTO  unidad VALUES('100','ATENCIÓN AMBULATORIA',7283959);
-INSERT INTO  unidad VALUES('200','ATENCIÓN URGENCIA',11959315);
-INSERT INTO  unidad VALUES('300','PACIENTE CRÍTICO',3758049);
-INSERT INTO  unidad VALUES('400','ATENCIÓN ADULTO',10573148);
-INSERT INTO  unidad VALUES('500','ONCOLÓGICA',10282370);
-INSERT INTO  unidad VALUES('600','PSIQUIATRÍA Y SALUD MENTAL',14353190);
-INSERT INTO  unidad VALUES('700','CIRUGÍA',5588583);
-INSERT INTO  unidad VALUES('800','CIRUGÍA PLÁSTICA',5588583);
-INSERT INTO  unidad VALUES('900','CARDIOLOGÍA',5588583);
-INSERT INTO  unidad VALUES('1000','TRAUMATOLOGÍA ADULTO',6117105);
+INSERT INTO  unidad VALUES('100','ATENCIï¿½N AMBULATORIA',7283959);
+INSERT INTO  unidad VALUES('200','ATENCIï¿½N URGENCIA',11959315);
+INSERT INTO  unidad VALUES('300','PACIENTE CRï¿½TICO',3758049);
+INSERT INTO  unidad VALUES('400','ATENCIï¿½N ADULTO',10573148);
+INSERT INTO  unidad VALUES('500','ONCOLï¿½GICA',10282370);
+INSERT INTO  unidad VALUES('600','PSIQUIATRï¿½A Y SALUD MENTAL',14353190);
+INSERT INTO  unidad VALUES('700','CIRUGï¿½A',5588583);
+INSERT INTO  unidad VALUES('800','CIRUGï¿½A PLï¿½STICA',5588583);
+INSERT INTO  unidad VALUES('900','CARDIOLOGï¿½A',5588583);
+INSERT INTO  unidad VALUES('1000','TRAUMATOLOGï¿½A ADULTO',6117105);
 
 INSERT INTO  paciente VALUES(6215470,'5','Nora','Carmen','Escobar','Montero','21-07-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-4),416794313,120);
 INSERT INTO  paciente VALUES(7555810,'7','Jenoveva','Carmen','Monares','Urrutia','10-09-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-4),413753199,70);
 INSERT INTO  paciente VALUES(6941733,'7','Miguel','Navor','Diocares','Herrera','25-01-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-6),414528259,50);
 INSERT INTO  paciente VALUES(7144708,'1','Maria','Julia','Gonzalez','Beltran','23-02-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-7),414837162,90);
-INSERT INTO  paciente VALUES(2576808,'6','Jose','Jorge','Echeverria','Muñoz','08-01-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-7),413706131,40);
+INSERT INTO  paciente VALUES(2576808,'6','Jose','Jorge','Echeverria','Muï¿½oz','08-01-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-7),413706131,40);
 INSERT INTO  paciente VALUES(13770506,'0','Yasna','Elizabeth','Diaz','Cisterna','15-02-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-8),413226082,20);
 INSERT INTO  paciente VALUES(15494012,'K','Soledad','Alejandra','Perez','Gallejos','17-11-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-8),418253241,40);
 INSERT INTO  paciente VALUES(6400537,'5','Jose','Cardenio','Zurita','Bustamante','04-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-13),417824064,50);
 INSERT INTO  paciente VALUES(6239966,'K','Rosa','Irenia','Beltran','Rodriguez','19-06-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-14),414487222,70);
 INSERT INTO  paciente VALUES(5649139,'2','Prosperina','Mercedes','Quiroz','Valenzuela','06-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-14),417677800,30);
-INSERT INTO  paciente VALUES(10726792,'1','Cecilia','Nieves','Carrasco','Muñoz','09-10-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-15),418443858,120);
+INSERT INTO  paciente VALUES(10726792,'1','Cecilia','Nieves','Carrasco','Muï¿½oz','09-10-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-15),418443858,120);
 INSERT INTO  paciente VALUES(16204720,'5','Marlene','Ivon','Gutierrez','Vasquez','16-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-15),415901844,90);
 INSERT INTO  paciente VALUES(5820729,'2','Bernardo','Jose','Inzunza','Sepulveda','02-07-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-15),412247153,10);
 INSERT INTO  paciente VALUES(12766479,'K','Maria','Pilar','Arroyo','Escobar','29-09-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-17),414177253,90);
 INSERT INTO  paciente VALUES(6675981,'4','Olga','Carmen','Navarrete','Paredes','24-06-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-19),416789707,100);
-INSERT INTO  paciente VALUES(4744782,'8','Jose','Santos','Torres','Muñoz','28-02-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-19),415575381,90);
+INSERT INTO  paciente VALUES(4744782,'8','Jose','Santos','Torres','Muï¿½oz','28-02-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-19),415575381,90);
 INSERT INTO  paciente VALUES(9073794,'5','Cenobia','Carmen','Marin','Valenzuela','04-11-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-21),413152009,110);
 INSERT INTO  paciente VALUES(7283959,'5','Hugo','Alfredo','Suazo','Riquelme','16-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-22),415234899,30);
 INSERT INTO  paciente VALUES(8928585,'2','Gladys','Carmen','Beltran','Parra','26-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-24),418376396,90);
 INSERT INTO  paciente VALUES(5091732,'0','Jerman','Marcelo','Escalona','Espinoza','12-05-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-24),415399103,60);
 INSERT INTO  paciente VALUES(8572120,'8','Florencio','Eduardo','Suazo','Riquelme','6-07-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-24),418552190,100);
 INSERT INTO  paciente VALUES(8284373,'6','Norma','Carmen','Echeverria','Echevarria','16-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-26),418269172,80);
-INSERT INTO  paciente VALUES(9101755,'5','Maria','Leontina','Guiñez','Muñoz','19-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-23),414895096,50);
+INSERT INTO  paciente VALUES(9101755,'5','Maria','Leontina','Guiï¿½ez','Muï¿½oz','19-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-23),414895096,50);
 INSERT INTO  paciente VALUES(8671238,'5','Marina','Rosario','Carrasco','Lopez','16-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-28),416756218,50);
 INSERT INTO  paciente VALUES(8162534,'4','Honoria','Transito','Escobar','Valenzuela','27-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-28),418902836,60);
 INSERT INTO  paciente VALUES(4378812,'4','Julia','Iris','Chavarria','Gutierrez','05-02-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-29),414424462,70);
-INSERT INTO  paciente VALUES(13604980,'1','Veronica','Yaneth','Ormeño','Heredia','13-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-29),417688395,150);
+INSERT INTO  paciente VALUES(13604980,'1','Veronica','Yaneth','Ormeï¿½o','Heredia','13-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-29),417688395,150);
 INSERT INTO  paciente VALUES(4426899,'K','Sergio','Rodrigo','Vasquez','Olate','02-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-29),412725231,60);
 INSERT INTO  paciente VALUES(4884829,'K','Flor','Maria','Alvarez','Caceres','21-06-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-31),416302077,130);
 INSERT INTO  paciente VALUES(4603482,'1','Berta','Ines','Gutierrez','Solar','25-11-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-31),415561511,40);
@@ -383,7 +383,7 @@ INSERT INTO  paciente VALUES(11574234,'5','Jeannette','Maria','Matamala','Arroyo
 INSERT INTO  paciente VALUES(12165324,'9','Ana','Gabriela','Zavala','Zavala','08-05-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-36),412440414,100);
 INSERT INTO  paciente VALUES(4892956,'7','Martiniano','Segundo','Quilodran','Hernandez','30-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-36),412870010,70);
 INSERT INTO  paciente VALUES(3066256,'3','Olga','Ximena','Belmar','Lamilla','10-05-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-37),412805543,130);
-INSERT INTO  paciente VALUES(5117349,'K','Hugo','Pablina','Muñoz','Figueroa','29-12-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-37),417928279,10);
+INSERT INTO  paciente VALUES(5117349,'K','Hugo','Pablina','Muï¿½oz','Figueroa','29-12-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-37),417928279,10);
 INSERT INTO  paciente VALUES(9685598,'2','Victor','Manuel','Estrada','Porraz','26-09-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-38),418882718,50);
 INSERT INTO  paciente VALUES(6110507,'7','Rebeca','Carmen','Sanchez','Campos','9-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-39),413314293,10);
 INSERT INTO  paciente VALUES(5056163,'1','Florencio','Segundo','Villalobos','Constanzo','08-09-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-39),412391625,170);
@@ -392,9 +392,9 @@ INSERT INTO  paciente VALUES(10805156,'6','Mirna','Susi','Soto','Echeverria','11
 INSERT INTO  paciente VALUES(4347082,'5','Jose','Hipolito','Bobadilla','Ortega','22-09-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-44),415919644,90);
 INSERT INTO  paciente VALUES(3385116,'2','Jose','Francisco','Figueroa','Castillo','17-12-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-44),415432086,40);
 INSERT INTO  paciente VALUES(5738855,'2','Evarista','Carmen','Riffo','Arroyo','14-02-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-45),414431983,10);
-INSERT INTO  paciente VALUES(6845014,'4','Manuel','Jesus','Muñoz','Cabezas','30-10-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-47),418809142,30);
+INSERT INTO  paciente VALUES(6845014,'4','Manuel','Jesus','Muï¿½oz','Cabezas','30-10-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-47),418809142,30);
 INSERT INTO  paciente VALUES(10493740,'3','Carmela','Guacolda','Osses','Ramirez','25-11-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-48),415669938,90);
-INSERT INTO  paciente VALUES(5932711,'9','Marta','Elena','Valeria','Acuña','04-10-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-48),412627756,20);
+INSERT INTO  paciente VALUES(5932711,'9','Marta','Elena','Valeria','Acuï¿½a','04-10-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-48),412627756,20);
 INSERT INTO  paciente VALUES(6655779,'0','Maria','Gabriela','Sanchez','Cid','11-01-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-50),414121203,90);
 INSERT INTO  paciente VALUES(4396440,'2','Luis','Mario','Diaz','Contreras','25-01-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-50),413424438,50);
 INSERT INTO  paciente VALUES(7603793,'0','Rina','Alme','Lavin','Escobar','16-01-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-52),412803051,100);
@@ -409,10 +409,10 @@ INSERT INTO  paciente VALUES(3632537,'2','Homero','Jorge','Gonzalez','Sanhueza',
 INSERT INTO  paciente VALUES(5822189,'9','Sonia','Claudia','Gutierrez','Pedraza','01-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-61),416488227,80);
 INSERT INTO  paciente VALUES(8329433,'7','Eliana','Andrea','Liempi','Liempi','29-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-61),416116217,80);
 INSERT INTO  paciente VALUES(13604300,'5','Claudia','Soledad','Inzunza','Bravo','21-10-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-62),418591075,10);
-INSERT INTO  paciente VALUES(4989000,'1','Eliana','Clotilde','Sepulveda','Peña','22-12-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-62),417253732,90);
+INSERT INTO  paciente VALUES(4989000,'1','Eliana','Clotilde','Sepulveda','Peï¿½a','22-12-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-62),417253732,90);
 INSERT INTO  paciente VALUES(8601391,'6','Hector','Claudio','Castillo','Castillo','20-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-63),412428209,20);
 INSERT INTO  paciente VALUES(7599430,'3','Monica','Rosario','Sepulveda','Carrasco','3-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-65),416716457,10);
-INSERT INTO  paciente VALUES(11959215,'1','Texia','Yaneth','Peña','Gutierrez','02-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-66),413158388,80);
+INSERT INTO  paciente VALUES(11959215,'1','Texia','Yaneth','Peï¿½a','Gutierrez','02-03-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-66),413158388,80);
 INSERT INTO  paciente VALUES(6407635,'3','Maria','Albertina','Rivera','Soto','21-07-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-66),413389873,30);
 INSERT INTO  paciente VALUES(3781561,'6','Maria','Lucila','Alarcon','Sepulveda','16-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-67),417792292,100);
 INSERT INTO  paciente VALUES(9851387,'6','Elba','Damaris','Castillo','Castillo','08-02-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-67),412959770,50);
@@ -432,9 +432,9 @@ INSERT INTO  paciente VALUES(12765873,'0','Sergio','Jose','Hernandez','Zapata','
 INSERT INTO  paciente VALUES(3562788,'K','Norma','Magdalena','Araneda','Araneda','04-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-79),418466801,10);
 INSERT INTO  paciente VALUES(7422084,'3','Jose','Segundo','Constanzo','Caceres','09-08-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-79),414665564,40);
 INSERT INTO  paciente VALUES(6415238,'6','Juan','Antonio','Medina','Medina','29-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-79),416938824,20);
-INSERT INTO  paciente VALUES(3754747,'6','Silvio','Erasmo','Peña','Gutierrez','27-09-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-79),416512973,40);
+INSERT INTO  paciente VALUES(3754747,'6','Silvio','Erasmo','Peï¿½a','Gutierrez','27-09-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-79),416512973,40);
 INSERT INTO  paciente VALUES(9168286,'9','Luisa','Amalia','Chavarria','Mella','12-12-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-81),413809076,20);
-INSERT INTO  paciente VALUES(14438381,'8','Jorge','Antonio','Muñoz','Lara','03-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-81),415197075,40);
+INSERT INTO  paciente VALUES(14438381,'8','Jorge','Antonio','Muï¿½oz','Lara','03-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-81),415197075,40);
 INSERT INTO  paciente VALUES(3911077,'6','Fidelina','Carmen','Sepulveda','Vega','03-04-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-83),414837119,30);
 INSERT INTO  paciente VALUES(5628094,'4','Nelly','Carmen','Torres','Sanhueza','08-07-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-83),414975945,10);
 INSERT INTO  paciente VALUES(5455736,'1','Gladys','Elena','Gonzalez','Cabezas','05-06-'||TO_CHAR(EXTRACT(YEAR FROM SYSDATE)-84),414285128,30);
@@ -1378,7 +1378,7 @@ INSERT INTO pago_atencion VALUES('552','27/08/'||TO_CHAR(TO_CHAR(SYSDATE,'YYYY')
 INSERT INTO pago_atencion VALUES('553','06/09/'||TO_CHAR(SYSDATE,'YYYY'),'10/09/'||TO_CHAR(SYSDATE,'YYYY'),'12581','12581',null);
 INSERT INTO pago_atencion VALUES('555','11/02/'||TO_CHAR(TO_CHAR(SYSDATE,'YYYY')-2),'20/02/'||TO_CHAR(TO_CHAR(SYSDATE,'YYYY')-2),'52852','52852',null);
 
--- ****************** CREACIÓN DE CLAVES FORÁANEAS *****************
+-- ****************** CREACIï¿½N DE CLAVES FORï¿½ANEAS *****************
 ALTER TABLE MEDICO ADD CONSTRAINT FK_UNIDAD FOREIGN KEY (uni_id) REFERENCES UNIDAD (uni_id);
 ALTER TABLE MEDICO ADD CONSTRAINT FK_CARGO FOREIGN KEY (car_id) REFERENCES CARGO (car_id);
 ALTER TABLE ESPECIALIDAD_MEDICO ADD CONSTRAINT FK_ESPECIALIDAD_MEDICO_MED FOREIGN KEY (med_run) REFERENCES MEDICO (med_run);

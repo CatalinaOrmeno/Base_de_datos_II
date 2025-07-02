@@ -390,3 +390,185 @@ end;
         /
 
 -- Caso 4:
+    -- Cursor:
+    SELECT 
+        extract(year from sysdate) ANNO_TRIBUTARIO,
+        m.med_run,
+        m.dv_run,
+        m.pnombre||' '||m.snombre||' '||m.apaterno||' '||m.amaterno NOMBRE_COMPLETO,
+        c.nombre CARGO,
+        trunc(
+            case 
+                when months_between(to_date('01-01-'||extract(year from sysdate)),m.fecha_contrato) > 12 then
+                    12
+                else months_between(to_date('01-01-'||extract(year from sysdate)),m.fecha_contrato)
+            end
+        ) MESES,
+        m.sueldo_base SUELDO_MENSUAL,
+        m.sueldo_base * 12 SUELDO_ANUAL,
+        count(ate.ate_id)
+    FROM medico m
+        left join atencion ate on m.med_run = ate.med_run
+            and extract(year from ate.fecha_atencion) = extract(year from sysdate) - 1
+        join cargo c on m.car_id = c.car_id
+    group by m.med_run,m.dv_run,m.pnombre,m.snombre,m.apaterno,m.amaterno,c.nombre,m.fecha_contrato,m.sueldo_base
+    order by m.med_run;
+    
+    -- Subconsulta: Obtiene la información sobre cuantos profecionales cumplen con las condiciones para el bono por ganacia.
+    Select count(*) from (
+        SELECT 
+            count(ate.ate_id)
+        FROM medico m
+            left join atencion ate on m.med_run = ate.med_run
+                and extract(year from ate.fecha_atencion) = extract(year from sysdate) - 1
+        group by m.med_run
+        having count(ate.ate_id) > 5
+    );
+    
+    -- Bloque anonimo:
+    declare
+        cursor c_medicos is
+            SELECT 
+                extract(year from sysdate) ANNO_TRIBUTARIO,
+                m.med_run,
+                m.dv_run,
+                m.pnombre||' '||m.snombre||' '||m.apaterno||' '||m.amaterno NOMBRE_COMPLETO,
+                c.nombre CARGO,
+                trunc(
+                    case 
+                        when months_between(to_date('01-01-'||extract(year from sysdate)),m.fecha_contrato) > 12 then
+                            12
+                        else months_between(to_date('01-01-'||extract(year from sysdate)),m.fecha_contrato)
+                    end
+                ) MESES,
+                m.sueldo_base SUELDO_MENSUAL,
+                m.sueldo_base * trunc(
+                    case 
+                        when months_between(to_date('01-01-'||extract(year from sysdate)),m.fecha_contrato) > 12 then
+                            12
+                        else months_between(to_date('01-01-'||extract(year from sysdate)),m.fecha_contrato)
+                    end
+                ) SUELDO_ANUAL,
+                count(ate.ate_id)
+            FROM medico m
+                left join atencion ate on m.med_run = ate.med_run
+                    and extract(year from ate.fecha_atencion) = extract(year from sysdate) - 1
+                join cargo c on m.car_id = c.car_id
+            group by m.med_run,m.dv_run,m.pnombre,m.snombre,m.apaterno,m.amaterno,c.nombre,m.fecha_contrato,m.sueldo_base
+            order by m.med_run;
+        
+        v_ANNO_TRIBUTARIO           info_medico_sii.anno_tributario%type;
+        v_NUMRUN                    info_medico_sii.numrun%type;
+        v_DV_RUN                    info_medico_sii.dv_run%type;
+        v_NOMBRE_COMPLETO           info_medico_sii.nombre_completo%type;
+        v_CARGO                     info_medico_sii.cargo%type;
+        v_MESES_TRABAJADOS          info_medico_sii.meses_trabajados%type;
+        v_SUELDO_BASE_MENSUAL       info_medico_sii.sueldo_base_mensual%type;
+        v_SUELDO_BASE_ANUAL         info_medico_sii.sueldo_base_anual%type;
+        v_BONIF_ESPECIAL            info_medico_sii.bonif_especial%type := 0;
+        v_SUELDO_BRUTO_ANUAL        info_medico_sii.sueldo_bruto_anual%type;
+        v_RENTA_IMPONIBLE_ANUAL     info_medico_sii.renta_imponible_anual%type;
+        v_movilizacion              number := 0;
+        v_colacion                  number := 0;
+        v_numero_atenciones         number;
+        v_div_ganacias              number;
+        v_ganacias_anuales          number := &Ingrese_ganacias;
+        v_bono_ganacias             number := v_ganacias_anuales * 0.03;
+        v_bono_asig                 number := 0;
+        v_porcentaje_bono_atm       number := 0;
+        v_cifrado_rut               number := 100;
+        v_cifrado_dv                number := 10;
+        v_cifrado_sueldo            number := 900;
+        
+        -- Variables para calculos:
+        v_med_rut_ganacias          info_medico_sii.numrun%type;
+    begin
+        open c_medicos;
+        loop
+            fetch c_medicos into v_anno_tributario,v_numrun,v_dv_run,v_nombre_completo,v_cargo,
+                        v_meses_trabajados,v_sueldo_base_mensual,v_sueldo_base_anual,v_numero_atenciones;
+            exit when c_medicos%notfound;
+            
+            Select count(*) into v_div_ganacias from (
+                SELECT 
+                    count(ate.ate_id)
+                FROM medico m
+                    left join atencion ate on m.med_run = ate.med_run
+                        and extract(year from ate.fecha_atencion) = extract(year from sysdate) - 1
+                group by m.med_run
+                having count(ate.ate_id) > 5
+            );
+            
+            -- Calcular bonificaciones especiales:
+                --dbms_output.put_line(v_BONIF_ESPECIAL||' = '||v_bono_ganacias||'/'||v_div_ganacias);
+                if v_numero_atenciones > 5 then
+                    v_BONIF_ESPECIAL := trunc(v_bono_ganacias/v_div_ganacias);
+                else 
+                    v_BONIF_ESPECIAL := 0;
+                end if;
+                --dbms_output.put_line(v_BONIF_ESPECIAL);
+                
+                BEGIN
+                    SELECT porc_asig
+                    INTO v_porcentaje_bono_atm
+                    FROM tramo_asig_atmed
+                    WHERE v_numero_atenciones BETWEEN tramo_inf_atm AND tramo_sup_atm;
+                EXCEPTION
+                    WHEN NO_DATA_FOUND THEN
+                        v_porcentaje_bono_atm := 0;
+                END;
+                --dbms_output.put_line(v_porcentaje_bono_atm);
+            
+            -- Calcular bono de asignación especial:
+                if v_porcentaje_bono_atm != 0 then
+                    v_bono_asig := v_sueldo_base_mensual*(v_porcentaje_bono_atm/100);
+                else 
+                    v_bono_asig := 0;
+                end if;
+                --dbms_output.put_line(v_bono_asig);
+            
+            -- Calcular movilización:
+                v_movilizacion := trunc(v_sueldo_base_anual * 0.12);
+                --dbms_output.put_line(v_movilizacion);
+            
+            -- Calcular colación:
+                v_colacion := trunc(v_sueldo_base_anual * 0.2);
+                --dbms_output.put_line(v_colacion);
+            
+            -- Calcular renta imponible anual:
+                v_renta_imponible_anual := v_sueldo_base_anual + v_BONIF_ESPECIAL + v_bono_asig;
+                --dbms_output.put_line(v_renta_imponible_anual);
+            
+            -- Calcular sueldo bruto:
+                v_SUELDO_BRUTO_ANUAL := v_renta_imponible_anual + v_colacion + v_movilizacion;
+                --dbms_output.put_line(v_SUELDO_BRUTO_ANUAL);
+            
+            -- Cifrado:
+                -- NumRut:
+                    v_NUMRUN := to_char(v_NUMRUN)||to_char(v_cifrado_rut); 
+                    --dbms_output.put_line(v_NUMRUN);
+                    
+                    v_cifrado_rut := v_cifrado_rut + 1;
+                
+                -- DV:
+                    v_dv_run := to_char(v_cifrado_dv,'000')||to_char(v_dv_run);
+                    --dbms_output.put_line(v_dv_run);
+                    
+                    v_cifrado_dv := v_cifrado_dv + 3;
+                
+                -- Sueldo base mensual:
+                    v_sueldo_base_mensual := to_char(v_sueldo_base_mensual)||to_char(v_cifrado_sueldo);
+                    --dbms_output.put_line(v_sueldo_base_mensual);
+                    
+                    v_cifrado_sueldo := v_cifrado_sueldo - 10;
+            
+            -- Guardar los datos en la tabla:
+            INSERT INTO info_medico_sii VALUES (
+                v_anno_tributario,v_numrun,v_dv_run,v_nombre_completo,v_cargo,
+                v_meses_trabajados,v_sueldo_base_mensual,v_sueldo_base_anual,
+                (v_BONIF_ESPECIAL + v_bono_asig),v_SUELDO_BRUTO_ANUAL,v_renta_imponible_anual);
+        end loop;
+        close c_medicos;
+    end;
+    /
+    -- DELETE FROM info_medico_sii;
